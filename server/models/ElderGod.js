@@ -14,11 +14,11 @@ const ElderGodSchema = new mongoose.Schema({
     trim: true,
     set: setName,
   },
-  pps: { //praise per second, the amount of praise the player is earning per second
+  pps: { // praise per second, the amount of praise the player is earning per second
     type: Number,
     default: 0,
   },
-  totalPraise: { //total amount of praise. Used as currency to buy more followers
+  totalPraise: { // total amount of praise. Used as currency to buy more followers
     type: Number,
     default: 0,
   },
@@ -73,7 +73,7 @@ ElderGodSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
     owner: convertId(ownerId),
   };
-  
+
   return ElderGodModel.find(search).select('name allEntities').exec(callback);
 };
 
