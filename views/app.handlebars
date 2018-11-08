@@ -10,16 +10,25 @@
   <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
     <div class="navlink"><a href="/logout">Log out</a></div>
   </nav>
-  <section id="makeDomo">
-    <form id="domoForm" name="domoForm" action="/maker" method="POST" class="domoForm">
+  <section id="newGame">
+    <form id="newGameForm" name="newGameForm" action="/game" method="POST" class="newGameForm">
       <label for="name">Elder God Name: </label>
-      <input id="domoName" type="text" name="name" placeholder="Domo Name"/>
-      <input class="makeDomoSubmit" type="submit" value="Make Domo" />
+      <input id="godName" type="text" name="name" placeholder="Name your Deity"/>
+      <input type="hidden" name="_csrf" value={{csrfToken}} />
+      <input class="newGameSubmit" type="submit" value="New Game" />
     </form>
   </section>
-  <section id="domos">
-    <div class="domo">
-
+  <section id="gameContent">
+    <div class="gameContent">
+      {{#if gods}}
+        {{#each gods}}
+          <div class="god">
+            <h3 class="godName">Name: {{this.name}}</h3>
+          </div>
+        {{/each}}
+      {{else}}
+        <h3 class="emptyGods">No Gods Yet</h3>
+      {{/if}}
     </div>
   </section>
   <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
