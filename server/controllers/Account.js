@@ -1,7 +1,9 @@
 const models = require('../models');
+const elderGod = require('./ElderGod.js');
 
 const Account = models.Account;
 
+// renders all pages and sends csrf token when needed
 const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
@@ -11,14 +13,24 @@ const signupPage = (req, res) => {
 };
 
 const changePWPage = (req, res) => {
-  res.render('pwchange', { csrfToken: req.csrfToken() });
+  res.render('changePassword', { csrfToken: req.csrfToken() });
 };
 
+const notFound = (req, res) => {
+  res.render('notFound');
+};
+
+const rulesPage = (req, res) => {
+  res.render('rules');
+};
+
+// destroys current session and goes to the login page
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
 };
 
+// logs into the user's account
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -41,6 +53,7 @@ const login = (request, response) => {
   });
 };
 
+// signs up to create a new user
 const signup = (request, response) => {
   const req = request;
   const res = response;
@@ -48,8 +61,9 @@ const signup = (request, response) => {
   req.body.username = `${req.body.username}`;
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
+  req.body.name = `${req.body.name}`;
 
-  if (!req.body.username || !req.body.pass || !req.body.pass2) {
+  if (!req.body.username || !req.body.pass || !req.body.pass2 || !req.body.name) {
     return res.status(400).json({ error: 'All fields required!' });
   }
 
@@ -68,9 +82,11 @@ const signup = (request, response) => {
 
     const savePromise = newAccount.save();
 
+    // saving the promise sends the god name to the
+    // elder god controller to make a new god for the new player
     savePromise.then(() => {
       req.session.account = Account.AccountModel.toAPI(newAccount);
-      return res.json({ redirect: '/game' });
+      return elderGod.newGame(req, res);
     });
 
     savePromise.catch((err) => {
@@ -84,16 +100,52 @@ const signup = (request, response) => {
     });
   });
 };
-/*
+
+// changes user's password
 const changePW = (request, response) => {
   const req = request;
   const res = response;
+
+  req.body.pass = `${req.body.pass}`;
+  req.body.pass2 = `${req.body.pass2}`;
+
+  if (!req.body.pass || !req.body.pass2) {
+    return res.status(400).json({ error: 'All fields required!' });
+  }
+
+  if (req.body.pass !== req.body.pass2) {
+    return res.status(400).json({ error: 'Passwords must match!' });
+  }
+
+  return Account.AccountModel.findByUsername(req.session.account.username, (err, doc) => {
+    if (err) {
+      return res.json({ err }); // if error, return it
+    }
+
+    const acct = doc;
+
+    return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+      // creates a new hash and salt for the new password
+      acct.password = hash;
+      acct.salt = salt;
+
+      const savePromise = acct.save();
+
+      savePromise.then(() => res.json({ message: 'Password updated' }));
+
+      savePromise.catch(() => res.json({ err }));
+
+      return res;
+    });
+  });
 };
-*/
+
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signupPage = signupPage;
 module.exports.signup = signup;
 module.exports.changePWPage = changePWPage;
-// module.exports.changePW = changePW;
+module.exports.changePW = changePW;
+module.exports.rules = rulesPage;
+module.exports.notFound = notFound;

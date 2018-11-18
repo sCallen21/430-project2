@@ -77,6 +77,13 @@ ElderGodSchema.statics.findByOwner = (ownerId, callback) => {
   return ElderGodModel.find(search).select('name allEntities').exec(callback);
 };
 
+ElderGodSchema.statics.findById = (godId, callback) => {
+  const search = {
+    _id: godId,
+  };
+  return ElderGodModel.findOne(search).exec(callback);
+};
+
 ElderGodModel = mongoose.model('ElderGod', ElderGodSchema);
 
 module.exports.ElderGodModel = ElderGodModel;

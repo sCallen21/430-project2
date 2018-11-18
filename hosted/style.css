@@ -4,6 +4,23 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    font-family: lunch;
+}
+
+body {
+    background-image: url('img/bg.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+@font-face {
+    font-family: 'lunch';
+    src: url('fonts/lunchds.ttf');
+}
+      
+#lunch {
+    font-family: lunch, sans-serif;
+    display: none;
 }
 
 #logo {
@@ -14,10 +31,32 @@ html, body {
     border-radius: 8px;
 }
 
+.hide {
+    display: none;
+}
+
+footer {
+    width: 100%;
+    color: black;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -50px;
+}
+
+.push {
+  height: 50px;
+}
+
 nav {
     width: 100%;
     height: 50px;
-    background-color: #55acee;
+    background-color: #334842;
 }
 
 nav:nth-child(1) {
@@ -37,14 +76,14 @@ nav:nth-child(1) {
     color: white;
     text-decoration: none;
     padding: 5px;
-    border-radius: 4px;
-    background-color: #55acee;
+    background-color: #334842;
+    border-radius: 2px;
     transition: background-color 0.4s ease;
 }
 
 .navlink a:hover {
     transition: background-color 0.8s ease;
-    background-color: #66bdff;
+    background-color: #627C74;
 }
 
 .domoForm {
@@ -91,11 +130,13 @@ nav:nth-child(1) {
 }
 
 .mainForm {
-    height: 300px;
-    width: 350px;
+    width: 450px;
     margin: 0 auto;
-    padding-top: 350px;
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
     font-size: 1.2em;
+    color: black;
 }
 
 .mainForm h3 {
@@ -104,7 +145,7 @@ nav:nth-child(1) {
 
 .mainForm label {
     display: inline-block;
-    width: 100px;
+    width: 200px;
     margin-right: 10px;
     text-align: right;
     font-size: 1.2em;
@@ -117,13 +158,18 @@ nav:nth-child(1) {
     margin: 0 auto;
     margin-top: 14px;
     font-size: 1.2em;
-    width: 100px;
-    background-color: #55acee;
+    width: 200px;
+    background-color: #334842;
     border-radius: 2px;
-    border-color: #66acee;
+    border-color: #456058;
     padding: 3px 0px;
     color: white;
     text-decoration: none;
+    
+}
+
+input {
+  font-family: lunch;
 }
 
 .formSubmit:link, .formSubmit:visited, .formSubmit:hover, .formSubmit:active {
@@ -132,19 +178,24 @@ nav:nth-child(1) {
 
 .formSubmit:hover {
     transition: background-color 0.4s ease;
-    background-color: #338acc;
+    background-color: #627C74;
 }
 
-#user, #pass, #pass2 {
+#user, #pass, #pass2, #name {
     text-align: center;
-    font-size: 1.1em;
-    width: 180px;
-    border-radius: 6px;
+    font-size: 1em;
+    width: 220px;
+}
+#pass::placeholder, #pass2::placeholder {
+    font-family: lunch;
+}
+#pass, #pass2 {
+    font-family: Arial;
 }
 
-#user:focus, #pass:focus, #pass2:focus {
+#user:focus, #pass:focus, #pass2:focus, #name:focus {
     outline: none;
-    box-shadow: 0px 0px 1px 1px #55acee;
+    box-shadow: 0px 0px 1px 1px #17221F;
 }
 
 #domoMessage {
@@ -173,90 +224,79 @@ nav:nth-child(1) {
 
 #errorMessage {
     font-size: 1.2em;
-    font-weight: bold;
-    color: red;
-    font-style: italic;
-}
-
-#domo {
-    z-index: 225;
-    margin-top: -20px;
-    margin-left: 135px;
-    height: 450px;
-    width: 300px;
-    -ms-transform: rotate(330deg);
-    -webkit-transform: rotate(330deg); 
-    transform: rotate(330deg);
-}
-
-#domos {
-    width: 40%;
-    min-width: 400px;
-    border: 2px solid #55acee;
-    border-radius: 4px;
-    margin: 0 auto;
-    margin-top: 100px;
-}
-
-.domo {
-    width: 95%;
-    margin: 0 auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border: 2px solid #55acee;
-    border-radius: 4px;
-    background-color: #55acee;
-    padding: 10px;
-    min-height:60px;
-    overflow: hidden;
-}
-
-.domo:hover {
-    transition: border-color 0.2s ease-out;
-    border-color: rgba(255,255,255, 0.8);
-    transition: background-color 2.6s ease-out;
-    background-color: #66bfff;
-}
-
-img.domoFace {
-    margin-left: 25px;
-    margin-right: 10px;
-    height: 50px;
-    width: 50px;
-    border-radius: 4px;
-    margin-top:10px;
-    float:left;
-}
-
-h3.emptyDomo {
-    width: 400px;
-    font-size: 1.5em;
-    margin: 0 auto;
+    color: white;
+    font-family: lunch;
     text-align: center;
-    margin-top: 18px;
 }
 
-h3.domoName {
-    float:left;
-    width: 200px;
-    font-weight: bold;
-    padding-left: 65px;
-    font-size: 1.5em;
+#myCanvas {
+    margin: auto;
+    width: 590px;
+    display: block;
 }
 
-h3.domoAge {
-    float:right;
-    text-align: left;
-    width: 100px;
-    font-weight: bold;
-    padding-right: 40px;
-    font-size: 1.5em;
+h3 {
+  font-weight: normal;
+}
+.god {
+  text-align: center;
 }
 
-.domo:first-child {
-    margin-top: 10px;
+#godList {
+  width: 600px;
+  background-color: #334842;
+  color: white;
+  margin: auto;
+  padding: 50px;
+  padding-top: 10px;
+  margin-top: 50px;
 }
 
-.domo:last-child {
-    margin-bottom:10px;
+#godList .label {
+  color: yellow;
+}
+
+.godEntry{
+  display: block;
+  padding: 2px;
+  background-color: #466159;
+  border-radius: 2px;
+  margin-top: 5px;
+  height: 1em;
+}
+.godEntry p {
+  display: inline;
+  width: 50%;
+  float: left;
+  margin: 0;
+}
+
+#guide{
+  width: 60%;
+  background-color: #466159;
+  color: black;
+  margin: auto;
+  margin-top: 50px;
+  padding: 50px;
+  padding-top: 10px;
+}
+
+#guide h3{
+  color: yellow;
+  margin-bottom: 0;
+}
+
+#guide p{
+  margin-top: 5px;
+}
+
+h1{
+  font-weight: normal;
+  text-align: center;
+}
+
+#squidward{
+  margin: auto;
+  width: 600px;
+  display: block;
 }

@@ -6,10 +6,13 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
+const handlebars = require('handlebars');
+const NumeralHelper = require('handlebars.numeral');
+NumeralHelper.registerHelpers(handlebars);
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const url = require('url');
-const csrf = require('csrf');
+const csrf = require('csurf');
 
 const port = process.env.PORT || 3000;
 
@@ -24,7 +27,7 @@ mongoose.connect(dbURL, (err) => {
 
 let redisURL = {
   hostname: 'localhost',
-  port: 6579,
+  port: 6379,
 };
 
 let redisPASS;
@@ -64,6 +67,7 @@ app.set('views', `${__dirname}/../views`);
 app.use(cookieParser());
 
 app.use(csrf());
+
 app.use((err, req, res, next) => {
   if (err.code !== 'EBADCSRFTOKEN') return next(err);
 
